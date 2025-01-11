@@ -22,4 +22,12 @@ export class FileReader{
   readNextByte() {
     return this.bytes[this.cursor++]
   }
+  
+  readNextWord() {
+    return this.readNextByte() << 8 | this.readNextByte()
+  }
+
+  readNextDWord() {
+    return this.readNextWord() << 16 | this.readNextWord()
+  }
 }
