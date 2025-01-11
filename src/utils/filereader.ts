@@ -5,6 +5,10 @@ export class FileReader{
   bytes: Uint8Array = new Uint8Array()
   cursor: number = 0
   
+  get reachedEnd() {
+    return this.cursor >= this.bytes.length
+  }
+  
   constructor(filepath: string) {
     this.file = Bun.file(filepath)
   }
