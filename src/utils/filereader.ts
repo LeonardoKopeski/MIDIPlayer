@@ -34,4 +34,14 @@ export class FileReader{
   readNextDWord() {
     return this.readNextWord() << 16 | this.readNextWord()
   }
+
+  readNextVarLen() {
+    let value = 0
+    let byte = this.readNextByte()
+    while (byte & 0x80) {
+      value = (value << 7) | (byte & 0x7F)
+      byte = this.readNextByte()
+    }
+    return (value << 7) | byte
+  }
 }

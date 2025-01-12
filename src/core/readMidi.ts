@@ -1,11 +1,12 @@
 import type { FileReader } from '../utils/filereader'
 import { readMidiHeader } from './readMidiHeader'
 import { readMidiTag } from './readMidiTag'
+import { readMidiTrack } from './readMidiTrack'
 import type { MidiHeader } from './types'
 
 export function readMidiFile(reader: FileReader) {
-  //const chunks = []
   let header: MidiHeader | null = null
+  const tracks = []
 
   while (!reader.reachedEnd){
     const tag = readMidiTag(reader)
@@ -21,8 +22,8 @@ export function readMidiFile(reader: FileReader) {
       console.error('Invalid MIDI file')
       process.exit(1)
     }
-    
-    break
+
+    tracks.push(readMidiTrack(reader))
   }
 
   if (header === null) {
@@ -33,8 +34,4 @@ export function readMidiFile(reader: FileReader) {
   if (header.division < 0) {
     throw new Error('SMPTE time division is not supported')
   }
-
-  
-  
-  console.log(header) // TEMP
 }

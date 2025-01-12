@@ -1,4 +1,4 @@
-import { MThd, MTrk } from './tags'
+import { MThd, MTrk } from './mappings/tags'
 import type { FileReader } from '../utils/filereader'
 
 export function readMidiTag(reader: FileReader) {
