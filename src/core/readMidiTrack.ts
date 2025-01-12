@@ -1,52 +1,76 @@
 import type { FileReader } from '../utils/filereader'
-import { statusMap } from './mappings/statusMap'
+import { eventFamilies, systemEvents } from './mappings/eventMap'
 import type { MidiTrackEvent } from './types'
+import { decToHex } from './utils/bases'
 
-function intepretstatusByte(byte: number) {
-  // WTF Typescript, why do I need to do this?
-  let event = statusMap[byte as keyof typeof statusMap]
-
-  if (event === undefined) {
-    // console.error('Unsupported event type')
-    // process.exit(1)
-    event = statusMap[0]
+function intepretEventCodeByte(byte: number) {
+  const [highHalfHex, lowHalfHex] = decToHex(byte)
+  const { event, size } = eventFamilies[highHalfHex]
+  
+  if (event === 'SYSTEM') {
+    const { meta, event } = systemEvents[lowHalfHex]
+    if (meta) {
+      return {
+        event,
+        size,
+        eventType: 'META' as const
+      }
+    } else {
+      return {
+        event,
+        size,
+        eventType: 'SYSEX' as const
+      }
+    }
+  } else {
+    return {
+      event,
+      size,
+      eventType: 'MIDI' as const,
+      channel: parseInt(lowHalfHex, 16)
+    }
   }
-
-  return event
 }
 
 function readMidiTrackEvent(reader: FileReader) {
   const deltatime = reader.readNextVarLen()
   const statusByte = reader.readNextByte()
 
-  const status = intepretstatusByte(statusByte)
+  const eventCode = intepretEventCodeByte(statusByte)
 
-  const obj: Partial<MidiTrackEvent> = {
-    deltatime,
-    event: status.event,
-    eventType: status.eventType
-  }
-
-  switch (obj.eventType) {
+  switch (eventCode.eventType) {
     case 'MIDI':
-      obj.data = reader.readBytes((status as { args: number }).args)
-      obj.channel = (status as { channel: number }).channel
-      break
+      return {
+        deltatime,
+        event: eventCode.event,
+        eventType: eventCode.eventType,
+        channel: eventCode.channel,
+        data: reader.readBytes(eventCode.size)
+      }
     case 'META': {
-      obj.metaType = reader.readNextByte()
-      
+      const metaType = reader.readNextByte()
       const length = reader.readNextVarLen()
-      obj.data = reader.readBytes(length)
-      break
+      const data = reader.readBytes(length)
+
+      return {
+        deltatime,
+        event: eventCode.event,
+        eventType: eventCode.eventType,
+        metaType: metaType,
+        data
+      }
     }
     case 'SYSEX': {
       const length = reader.readNextVarLen()
-      obj.data = reader.readBytes(length)
-      break
+      const data = reader.readBytes(length)
+      return {
+        deltatime,
+        event: eventCode.event,
+        eventType: eventCode.eventType,
+        data
+      }
     }
   }
-
-  return obj as MidiTrackEvent
 }
 
 export function readMidiTrack(reader: FileReader) {
@@ -58,11 +82,6 @@ export function readMidiTrack(reader: FileReader) {
   while (reader.cursor < finalcursor) {
     trackEvents.push(readMidiTrackEvent(reader))
   }
-  
-  trackEvents.map(elm=>{
-    console.log(elm.event, elm.channel)
-  })
-  console.log('📑 src/core/readMidiTrack.ts:64') // TEMP
 
   return trackEvents
 }

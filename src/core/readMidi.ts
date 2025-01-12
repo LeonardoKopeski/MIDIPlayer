@@ -19,19 +19,19 @@ export function readMidiFile(reader: FileReader) {
     
     // If track, and there is no header, then the file is invalid
     if (header === null) {
-      console.error('Invalid MIDI file')
-      process.exit(1)
+      throw new Error('Invalid MIDI file: Tracks before header')
     }
 
     tracks.push(readMidiTrack(reader))
   }
 
   if (header === null) {
-    console.error('Invalid MIDI file')
-    process.exit(1)
+    throw new Error('Invalid MIDI file: No header at all')
   } 
 
   if (header.division < 0) {
     throw new Error('SMPTE time division is not supported')
   }
+
+  console.log(tracks) // TEMP
 }
