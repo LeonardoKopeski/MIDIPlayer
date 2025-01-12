@@ -33,5 +33,8 @@ export function readMidiFile(reader: FileReader) {
     throw new Error('SMPTE time division is not supported')
   }
 
-  console.log(tracks) // TEMP
+  return {
+    header,
+    tracks
+  }
 }

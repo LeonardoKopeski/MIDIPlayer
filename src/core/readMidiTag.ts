@@ -9,8 +9,7 @@ export function readMidiTag(reader: FileReader) {
   } else if (tagBytes === MTrk) {
     tag = 'MTrk'
   } else {
-    console.error('Invalid Tag')
-    process.exit(1)
+    throw new Error('Invalid MIDI tag: ' + tagBytes.toString(16))
   }
   return tag
 }
