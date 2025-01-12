@@ -1,8 +1,11 @@
 import { readMidiFile } from './core/readMidi'
 import { FileReader } from './utils/filereader'
 
-const reader = new FileReader('./test/test2.mid')
-await reader.loadFile()
+// Load file
+const bytes = await Bun.file('./test/test2.mid').bytes()
 
-// Read the MIDI signature
+// Start reader
+const reader = new FileReader(bytes)
+
+// Read file
 readMidiFile(reader)

@@ -1,21 +1,12 @@
-import type { BunFile } from 'bun'
-
 export class FileReader{
-  readonly file: BunFile
-  bytes: Uint8Array = new Uint8Array()
+  
   cursor: number = 0
   
   get reachedEnd() {
     return this.cursor >= this.bytes.length
   }
   
-  constructor(filepath: string) {
-    this.file = Bun.file(filepath)
-  }
-
-  async loadFile() {
-    this.bytes = await this.file.bytes()
-  }
+  constructor(readonly bytes: Uint8Array) {}
 
   readBytes(length: number) {
     const bytes = this.bytes.slice(this.cursor, this.cursor + length)
