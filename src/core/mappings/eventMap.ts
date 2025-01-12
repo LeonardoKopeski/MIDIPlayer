@@ -1,38 +1,19 @@
 import type { Hex } from '../types'
 
+const invalidEventFamily = {
+  event: 'INVALID',
+  size: 2
+} as const
+
 export const eventFamilies = {
-  '0': {
-    event: 'INVALID',
-    size: 2
-  },
-  '1': {
-    event: 'INVALID',
-    size: 2
-  },
-  '2': {
-    event: 'INVALID',
-    size: 2
-  },
-  '3': {
-    event: 'INVALID',
-    size: 2
-  },
-  '4': {
-    event: 'INVALID',
-    size: 2
-  },
-  '5': {
-    event: 'INVALID',
-    size: 2
-  },
-  '6': {
-    event: 'INVALID',
-    size: 2
-  },
-  '7': {
-    event: 'INVALID',
-    size: 2
-  },
+  '0': invalidEventFamily,
+  '1': invalidEventFamily,
+  '2': invalidEventFamily,
+  '3': invalidEventFamily,
+  '4': invalidEventFamily,
+  '5': invalidEventFamily,
+  '6': invalidEventFamily,
+  '7': invalidEventFamily,
   '8': {
     event: 'NOTE_OFF',
     size: 2
