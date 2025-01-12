@@ -30,6 +30,7 @@ function readMidiTrackEvent(reader: FileReader) {
   switch (obj.eventType) {
     case 'MIDI':
       obj.data = reader.readBytes((status as { args: number }).args)
+      obj.channel = (status as { channel: number }).channel
       break
     case 'META': {
       obj.metaType = reader.readNextByte()
@@ -58,7 +59,10 @@ export function readMidiTrack(reader: FileReader) {
     trackEvents.push(readMidiTrackEvent(reader))
   }
   
-  console.log(trackEvents.filter(elm => elm.eventType !== 'META' || elm.event === 'Invalid')) // TEMP
+  trackEvents.map(elm=>{
+    console.log(elm.event, elm.channel)
+  })
+  console.log('📑 src/core/readMidiTrack.ts:64') // TEMP
 
   return trackEvents
 }

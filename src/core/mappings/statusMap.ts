@@ -5,563 +5,675 @@ export const statusMap = {
   },
   128: { //80
     eventType: 'MIDI',
-    event: 'Chan 1 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 1 
   },
   129: { //81
     eventType: 'MIDI',
-    event: 'Chan 2 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 2 
   },
   130: { //82
     eventType: 'MIDI',
-    event: 'Chan 3 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 3 
   },
   131: { //83
     eventType: 'MIDI',
-    event: 'Chan 4 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 4 
   },
   132: { //84
     eventType: 'MIDI',
-    event: 'Chan 5 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 5 
   },
   133: { //85
     eventType: 'MIDI',
-    event: 'Chan 6 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 6 
   },
   134: { //86
     eventType: 'MIDI',
-    event: 'Chan 7 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 7 
   },
   135: { //87
     eventType: 'MIDI',
-    event: 'Chan 8 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 8 
   },
   136: { //88
     eventType: 'MIDI',
-    event: 'Chan 9 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 9 
   },
   137: { //89
     eventType: 'MIDI',
-    event: 'Chan 10 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 10 
   },
   138: { //8A
     eventType: 'MIDI',
-    event: 'Chan 11 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 11 
   },
   139: { //8B
     eventType: 'MIDI',
-    event: 'Chan 12 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 12 
   },
   140: { //8C
     eventType: 'MIDI',
-    event: 'Chan 13 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 13 
   },
   141: { //8D
     eventType: 'MIDI',
-    event: 'Chan 14 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 14 
   },
   142: { //8E
     eventType: 'MIDI',
-    event: 'Chan 15 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 15 
   },
   143: { //8F
     eventType: 'MIDI',
-    event: 'Chan 16 Note off',
-    args: 2
+    event: 'Note off',
+    args: 2,
+    channel: 16 
   },
   144: { //90
     eventType: 'MIDI',
-    event: 'Chan 1 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 1 
   },
   145: { //91
     eventType: 'MIDI',
-    event: 'Chan 2 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 2 
   },
   146: { //92
     eventType: 'MIDI',
-    event: 'Chan 3 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 3 
   },
   147: { //93
     eventType: 'MIDI',
-    event: 'Chan 4 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 4 
   },
   148: { //94
     eventType: 'MIDI',
-    event: 'Chan 5 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 5 
   },
   149: { //95
     eventType: 'MIDI',
-    event: 'Chan 6 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 6 
   },
   150: { //96
     eventType: 'MIDI',
-    event: 'Chan 7 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 7 
   },
   151: { //97
     eventType: 'MIDI',
-    event: 'Chan 8 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 8 
   },
   152: { //98
     eventType: 'MIDI',
-    event: 'Chan 9 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 9 
   },
   153: { //99
     eventType: 'MIDI',
-    event: 'Chan 10 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 10 
   },
   154: { //9A
     eventType: 'MIDI',
-    event: 'Chan 11 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 11 
   },
   155: { //9B
     eventType: 'MIDI',
-    event: 'Chan 12 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 12 
   },
   156: { //9C
     eventType: 'MIDI',
-    event: 'Chan 13 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 13 
   },
   157: { //9D
     eventType: 'MIDI',
-    event: 'Chan 14 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 14 
   },
   158: { //9E
     eventType: 'MIDI',
-    event: 'Chan 15 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 15 
   },
   159: { //9F
     eventType: 'MIDI',
-    event: 'Chan 16 Note on',
-    args: 2
+    event: 'Note on',
+    args: 2,
+    channel: 16 
   },
   160: { //A0
     eventType: 'MIDI',
-    event: 'Chan 1 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 1 
   },
   161: { //A1
     eventType: 'MIDI',
-    event: 'Chan 2 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 2 
   },
   162: { //A2
     eventType: 'MIDI',
-    event: 'Chan 3 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 3 
   },
   163: { //A3
     eventType: 'MIDI',
-    event: 'Chan 4 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 4 
   },
   164: { //A4
     eventType: 'MIDI',
-    event: 'Chan 5 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 5 
   },
   165: { //A5
     eventType: 'MIDI',
-    event: 'Chan 6 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 6 
   },
   166: { //A6
     eventType: 'MIDI',
-    event: 'Chan 7 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 7 
   },
   167: { //A7
     eventType: 'MIDI',
-    event: 'Chan 8 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 8 
   },
   168: { //A8
     eventType: 'MIDI',
-    event: 'Chan 9 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 9 
   },
   169: { //A9
     eventType: 'MIDI',
-    event: 'Chan 10 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 10 
   },
   170: { //AA
     eventType: 'MIDI',
-    event: 'Chan 11 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 11 
   },
   171: { //AB
     eventType: 'MIDI',
-    event: 'Chan 12 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 12 
   },
   172: { //AC
     eventType: 'MIDI',
-    event: 'Chan 13 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 13 
   },
   173: { //AD
     eventType: 'MIDI',
-    event: 'Chan 14 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 14 
   },
   174: { //AE
     eventType: 'MIDI',
-    event: 'Chan 15 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 15 
   },
   175: { //AF
     eventType: 'MIDI',
-    event: 'Chan 16 Polyphonic Aftertouch',
-    args: 2
+    event: 'Polyphonic Aftertouch',
+    args: 2,
+    channel: 16 
   },
   176: { //B0
     eventType: 'MIDI',
-    event: 'Chan 1 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 1 
   },
   177: { //B1
     eventType: 'MIDI',
-    event: 'Chan 2 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 2 
   },
   178: { //B2
     eventType: 'MIDI',
-    event: 'Chan 3 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 3 
   },
   179: { //B3
     eventType: 'MIDI',
-    event: 'Chan 4 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 4 
   },
   180: { //B4
     eventType: 'MIDI',
-    event: 'Chan 5 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 5 
   },
   181: { //B5
     eventType: 'MIDI',
-    event: 'Chan 6 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 6 
   },
   182: { //B6
     eventType: 'MIDI',
-    event: 'Chan 7 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 7 
   },
   183: { //B7
     eventType: 'MIDI',
-    event: 'Chan 8 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 8 
   },
   184: { //B8
     eventType: 'MIDI',
-    event: 'Chan 9 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 9 
   },
   185: { //B9
     eventType: 'MIDI',
-    event: 'Chan 10 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 10 
   },
   186: { //BA
     eventType: 'MIDI',
-    event: 'Chan 11 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 11 
   },
   187: { //BB
     eventType: 'MIDI',
-    event: 'Chan 12 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 12 
   },
   188: { //BC
     eventType: 'MIDI',
-    event: 'Chan 13 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 13 
   },
   189: { //BD
     eventType: 'MIDI',
-    event: 'Chan 14 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 14 
   },
   190: { //BE
     eventType: 'MIDI',
-    event: 'Chan 15 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 15 
   },
   191: { //BF
     eventType: 'MIDI',
-    event: 'Chan 16 Control/Mode',
-    args: 2
+    event: 'Control/Mode Change',
+    args: 2,
+    channel: 16
   },
   192: { //C0
     eventType: 'MIDI',
-    event: 'Chan 1 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 1 
   },
   193: { //C1
     eventType: 'MIDI',
-    event: 'Chan 2 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 2 
   },
   194: { //C2
     eventType: 'MIDI',
-    event: 'Chan 3 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 3 
   },
   195: { //C3
     eventType: 'MIDI',
-    event: 'Chan 4 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 4 
   },
   196: { //C4
     eventType: 'MIDI',
-    event: 'Chan 5 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 5 
   },
   197: { //C5
     eventType: 'MIDI',
-    event: 'Chan 6 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 6 
   },
   198: { //C6
     eventType: 'MIDI',
-    event: 'Chan 7 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 7 
   },
   199: { //C7
     eventType: 'MIDI',
-    event: 'Chan 8 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 8 
   },
   200: { //C8
     eventType: 'MIDI',
-    event: 'Chan 9 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 9 
   },
   201: { //C9
     eventType: 'MIDI',
-    event: 'Chan 10 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 10 
   },
   202: { //CA
     eventType: 'MIDI',
-    event: 'Chan 11 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 11 
   },
   203: { //CB
     eventType: 'MIDI',
-    event: 'Chan 12 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 12 
   },
   204: { //CC
     eventType: 'MIDI',
-    event: 'Chan 13 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 13 
   },
   205: { //CD
     eventType: 'MIDI',
-    event: 'Chan 14 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 14 
   },
   206: { //CE
     eventType: 'MIDI',
-    event: 'Chan 15 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 15 
   },
   207: { //CF
     eventType: 'MIDI',
-    event: 'Chan 16 Program Change',
-    args: 1
+    event: 'Program Change',
+    args: 1,
+    channel: 16 
   },
   208: { //D0
     eventType: 'MIDI',
-    event: 'Chan 1 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 1 
   },
   209: { //D1
     eventType: 'MIDI',
-    event: 'Chan 2 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 2 
   },
   210: { //D2
     eventType: 'MIDI',
-    event: 'Chan 3 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 3 
   },
   211: { //D3
     eventType: 'MIDI',
-    event: 'Chan 4 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 4 
   },
   212: { //D4
     eventType: 'MIDI',
-    event: 'Chan 5 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 5 
   },
   213: { //D5
     eventType: 'MIDI',
-    event: 'Chan 6 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 6 
   },
   214: { //D6
     eventType: 'MIDI',
-    event: 'Chan 7 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 7 
   },
   215: { //D7
     eventType: 'MIDI',
-    event: 'Chan 8 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 8 
   },
   216: { //D8
     eventType: 'MIDI',
-    event: 'Chan 9 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 9 
   },
   217: { //D9
     eventType: 'MIDI',
-    event: 'Chan 10 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 10 
   },
   218: { //DA
     eventType: 'MIDI',
-    event: 'Chan 11 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 11 
   },
   219: { //DB
     eventType: 'MIDI',
-    event: 'Chan 12 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 12 
   },
   220: { //DC
     eventType: 'MIDI',
-    event: 'Chan 13 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 13 
   },
   221: { //DD
     eventType: 'MIDI',
-    event: 'Chan 14 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 14 
   },
   222: { //DE
     eventType: 'MIDI',
-    event: 'Chan 15 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 15 
   },
   223: { //DF
     eventType: 'MIDI',
-    event: 'Chan 16 Channel Aftertouch',
-    args: 1
+    event: 'Channel Aftertouch',
+    args: 1,
+    channel: 16 
   },
   224: { //E0
     eventType: 'MIDI',
-    event: 'Chan 1 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 1 
   },
   225: { //E1
     eventType: 'MIDI',
-    event: 'Chan 2 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 2 
   },
   226: { //E2
     eventType: 'MIDI',
-    event: 'Chan 3 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 3 
   },
   227: { //E3
     eventType: 'MIDI',
-    event: 'Chan 4 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 4 
   },
   228: { //E4
     eventType: 'MIDI',
-    event: 'Chan 5 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 5 
   },
   229: { //E5
     eventType: 'MIDI',
-    event: 'Chan 6 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 6 
   },
   230: { //E6
     eventType: 'MIDI',
-    event: 'Chan 7 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 7 
   },
   231: { //E7
     eventType: 'MIDI',
-    event: 'Chan 8 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 8 
   },
   232: { //E8
     eventType: 'MIDI',
-    event: 'Chan 9 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 9 
   },
   233: { //E9
     eventType: 'MIDI',
-    event: 'Chan 10 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 10 
   },
   234: { //EA
     eventType: 'MIDI',
-    event: 'Chan 11 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 11 
   },
   235: { //EB
     eventType: 'MIDI',
-    event: 'Chan 12 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 12 
   },
   236: { //EC
     eventType: 'MIDI',
-    event: 'Chan 13 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 13 
   },
   237: { //ED
     eventType: 'MIDI',
-    event: 'Chan 14 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 14 
   },
   238: { //EE
     eventType: 'MIDI',
-    event: 'Chan 15 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 15 
   },
   239: { //EF
     eventType: 'MIDI',
-    event: 'Chan 16 Pitch Bend Change',
-    args: 2
+    event: 'Pitch Bend Change',
+    args: 2,
+    channel: 16 
   },
   240: { //F0
     eventType: 'SYSEX',
@@ -634,4 +746,5 @@ export const statusMap = {
 } | {
   eventType: 'MIDI'
   args: 1 | 2
+  channel: number
 })>

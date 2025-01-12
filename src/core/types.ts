@@ -14,5 +14,8 @@ export type MidiTrackEvent = {
   eventType: 'META'
   metaType: number
 } | {
-  eventType: 'MIDI' | 'SYSEX'
+  eventType: 'SYSEX'
+} | {
+  eventType: 'MIDI'
+  channel: number
 })
