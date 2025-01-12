@@ -1,15 +1,7 @@
 export type Hex = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F'
 export type HexByte = `${Hex}${Hex}`
 
-export type Events = (
-  'INVALID' |
-  'NOTE_OFF' |
-  'NOTE_ON' |
-  'POLY_PRESSURE' |
-  'CONTROL_CHANGE' |
-  'PROGRAM_CHANGE' |
-  'CHANNEL_PRESSURE' |
-  'PITCH_BEND' |
+export type SysExEvents = (
   'SEQUENCE_EXCLUSIVE' |
   'MIDI_TIME_CODE_QUARTER_FRAME' |
   'SONG_POSITION_POINTER' |
@@ -21,7 +13,23 @@ export type Events = (
   'START' |
   'CONTINUE' |
   'STOP' |
-  'ACTIVE_SENSING' |
+  'ACTIVE_SENSING'
+)
+
+export type MidiEvents = (
+  'INVALID' |
+  'NOTE_OFF' |
+  'NOTE_ON' |
+  'POLY_PRESSURE' |
+  'CONTROL_CHANGE' |
+  'PROGRAM_CHANGE' |
+  'CHANNEL_PRESSURE' |
+  'PITCH_BEND'
+)
+
+export type Events = (
+  MidiEvents |
+  SysExEvents |
   'META'
 )
 
