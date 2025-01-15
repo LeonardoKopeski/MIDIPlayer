@@ -1,4 +1,4 @@
-import { readMidiFile } from './core/readMidi'
+import { MIDIFile } from './core/midi'
 import { FileReader } from './utils/filereader'
 
 // Get file path
@@ -11,4 +11,5 @@ const bytes = await Bun.file(path).bytes()
 const reader = new FileReader(bytes)
 
 // Read file
-readMidiFile(reader)
+const midi = MIDIFile.read(reader)
+console.log(midi.generateTimeMap(1))

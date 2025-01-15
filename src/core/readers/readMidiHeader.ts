@@ -1,5 +1,5 @@
-import type { FileReader } from '../utils/filereader'
-import { convertUIntToInt } from '../utils/uintToInt'
+import type { FileReader } from '../../utils/filereader'
+import { convertUIntToInt } from '../../utils/uintToInt'
 
 export function readMidiHeader(reader: FileReader) {
   // Discard chunk length, as it is always 6

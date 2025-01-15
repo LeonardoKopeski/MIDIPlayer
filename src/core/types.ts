@@ -1,7 +1,13 @@
+import type { MIDITrackEvent } from './events/event'
+
 export type Hex = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F'
 export type HexByte = `${Hex}${Hex}`
 
-export type Note = 'C' | 'C#' | 'D' | 'D#' | 'E' | 'F' | 'F#' | 'G' | 'G#' | 'A' | 'A#' | 'B'
+export type NoteName = 'C' | 'C#' | 'D' | 'D#' | 'E' | 'F' | 'F#' | 'G' | 'G#' | 'A' | 'A#' | 'B'
+export interface Note{
+  note: NoteName
+  octave: number
+}
 
 export type SysExEvents = (
   'SEQUENCE_EXCLUSIVE' |
@@ -29,28 +35,19 @@ export type MidiEvents = (
   'PITCH_BEND'
 )
 
-export type Events = (
-  MidiEvents |
-  SysExEvents |
-  'META'
+export type MIDIFormat = (
+  'SINGLE_TRACK' |
+  'MULTI_TRACK' |
+  'MULTI_SONG'
 )
 
-export interface MidiHeader{
-  format: 'SINGLE_TRACK' | 'MULTI_TRACK' | 'MULTI_SONG'
+export interface MIDIHeader{
+  format: MIDIFormat
   trackCount: number
   division: number
 }
 
-export type MidiTrackEvent = {
-  deltatime: number
-  event: Events
-  data: Uint8Array
-} & ({
-  eventType: 'META'
-  metaType: number
-} | {
-  eventType: 'SYSEX'
-} | {
-  eventType: 'MIDI'
-  channel: number
-})
+export type MIDI = {
+  header: MIDIHeader
+  tracks: MIDITrackEvent[][]
+}

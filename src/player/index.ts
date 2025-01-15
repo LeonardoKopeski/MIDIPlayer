@@ -1,5 +1,5 @@
 import { NoteOffMidiEvent, NoteOnMidiEvent } from '../core/events/event'
-import { readMidiFile } from '../core/readMidi'
+import { readMidiFile } from '../core/readers/readMidi'
 import { load } from './loadFile'
 import { log } from './logger'
 import * as Tone from 'tone'

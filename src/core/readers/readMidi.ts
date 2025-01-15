@@ -1,11 +1,11 @@
-import type { FileReader } from '../utils/filereader'
+import type { FileReader } from '../../utils/filereader'
 import { readMidiHeader } from './readMidiHeader'
 import { readMidiTag } from './readMidiTag'
 import { readMidiTrack } from './readMidiTrack'
-import type { MidiHeader } from './types'
+import type { MIDI, MIDIHeader } from '../types'
 
-export function readMidiFile(reader: FileReader) {
-  let header: MidiHeader | null = null
+export function readMidiFile(reader: FileReader): MIDI {
+  let header: MIDIHeader | null = null
   const tracks = []
 
   while (!reader.reachedEnd){

@@ -2,7 +2,7 @@ import type { FileReader } from '../../utils/filereader'
 import { eventFamilies, systemEvents } from '../mappings/eventMap'
 import type { MidiEvents } from '../types'
 import { decByteToHex } from '../utils/bases'
-import { ChannelAftertouchMidiEvent, ControlChangeMidiEvent, InvalidMidiEvent, MetaEvent, NoteOffMidiEvent, NoteOnMidiEvent, PitchBendChangeMidiEvent, PolyphonicAftertouchMidiEvent, ProgramChangeMidiEvent, SysExEvent, TrackEvent } from './event'
+import { ChannelAftertouchMidiEvent, ControlChangeMidiEvent, InvalidMidiEvent, MetaEvent, NoteOffMidiEvent, NoteOnMidiEvent, PitchBendChangeMidiEvent, PolyphonicAftertouchMidiEvent, ProgramChangeMidiEvent, SysExEvent, MIDITrackEvent } from './event'
 
 function intepretEventCode(byte: number) {
   const [highHalfHex, lowHalfHex] = decByteToHex(byte)
@@ -99,7 +99,7 @@ function createMidiEvent(deltatime: number, midiEvent: MidiEvents, channel: numb
 
 export function readMidiTrackEvent(reader: FileReader, lastEventCode: number): {
   eventCode: number,
-  event: TrackEvent
+  event: MIDITrackEvent
 } {
   const deltatime = reader.readNextVarLen()
   

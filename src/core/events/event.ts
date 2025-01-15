@@ -1,11 +1,11 @@
 import { noteMap } from '../mappings/notes'
 import type { SysExEvents } from '../types'
 
-export abstract class TrackEvent{
+export abstract class MIDITrackEvent{
   constructor(readonly deltatime: number){} 
 }
 
-export class MetaEvent extends TrackEvent{
+export class MetaEvent extends MIDITrackEvent{
   constructor(
     deltatime: number,
     readonly type: number,
@@ -15,7 +15,7 @@ export class MetaEvent extends TrackEvent{
   }
 }
 
-export class SysExEvent extends TrackEvent {
+export class SysExEvent extends MIDITrackEvent {
   constructor(
     deltatime: number,
     readonly event: SysExEvents,
@@ -25,7 +25,7 @@ export class SysExEvent extends TrackEvent {
   }
 }
 
-export abstract class MidiEvent extends TrackEvent{
+export abstract class MidiEvent extends MIDITrackEvent{
   constructor(
     deltatime: number,
     readonly channel: number
