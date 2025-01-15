@@ -1,3 +1,4 @@
+import { noteMap } from '../mappings/notes'
 import type { SysExEvents } from '../types'
 
 export abstract class TrackEvent{
@@ -24,35 +25,6 @@ export class SysExEvent extends TrackEvent {
   }
 }
 
-// '8': {
-//     event: 'NOTE_OFF',
-//     size: 2
-//   },
-//   '9': {
-//     event: 'NOTE_ON',
-//     size: 2
-//   },
-//   'A': {
-//     event: 'POLY_PRESSURE',
-//     size: 2
-//   },
-//   'B': {
-//     event: 'CONTROL_CHANGE',
-//     size: 2
-//   },
-//   'C': {
-//     event: 'PROGRAM_CHANGE',
-//     size: 1
-//   },
-//   'D': {
-//     event: 'CHANNEL_PRESSURE',
-//     size: 1
-//   },
-//   'E': {
-//     event: 'PITCH_BEND',
-//     size: 2
-//   },
-
 export abstract class MidiEvent extends TrackEvent{
   constructor(
     deltatime: number,
@@ -63,10 +35,14 @@ export abstract class MidiEvent extends TrackEvent{
 }
 
 export class NoteOffMidiEvent extends MidiEvent{
+  get note() {
+    return noteMap[this.noteid as keyof typeof noteMap]
+  }
+
   constructor(
     deltatime: number,
     channel: number,
-    readonly note: number,
+    readonly noteid: number,
     readonly velocity: number
   ) {
     super(deltatime, channel)
@@ -74,10 +50,14 @@ export class NoteOffMidiEvent extends MidiEvent{
 }
 
 export class NoteOnMidiEvent extends MidiEvent{
+  get note() {
+    return noteMap[this.noteid as keyof typeof noteMap]
+  }
+
   constructor(
     deltatime: number,
     channel: number,
-    readonly note: number,
+    readonly noteid: number,
     readonly velocity: number
   ) {
     super(deltatime, channel)

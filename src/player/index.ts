@@ -2,6 +2,10 @@ import { NoteOffMidiEvent, NoteOnMidiEvent } from '../core/events/event'
 import { readMidiFile } from '../core/readMidi'
 import { load } from './loadFile'
 import { log } from './logger'
+import * as Tone from 'tone'
+
+// create channels and connect them to the main output (your speakers)
+const synth = new Tone.PolySynth().toDestination()
 
 log('Initializing...')
 
@@ -14,15 +18,16 @@ async function main(){
 
   const toPlay = []
 
-  // Play tracks
+  // handle tracks
   for (const track of tracks) {
-    log('Playing track...')
+    log('Handling track...')
     let time = 0
     for (const event of track) {
       time += event.deltatime
       if (event instanceof NoteOnMidiEvent) {
         toPlay.push({
           mode: 'ON',
+          channel: event.channel,
           note: event.note,
           velocity: event.velocity,
           time
@@ -30,6 +35,7 @@ async function main(){
       } else if (event instanceof NoteOffMidiEvent) {
         toPlay.push({
           mode: 'OFF',
+          channel: event.channel,
           note: event.note,
           time
         })
@@ -37,10 +43,23 @@ async function main(){
     }
   }
 
+  // Play
+  const now = synth.now()
   for (const item of toPlay) {
-    log(`Playing ${item.mode} ${item.note} at ${item.time}`)
+    const note = item.note.note+item.note.octave
+    if (item.mode === 'ON') {
+      synth.triggerAttack(note, now + (item.time / 1000))
+    } else {
+      synth.triggerRelease(now + (item.time / 1000))
+    }
+    
   }
 }
+
+document.querySelector('button')?.addEventListener('click', async () => {
+  await Tone.start()
+  log('audio is ready')
+})
 
 main().catch((err)=>{
   log(err)
