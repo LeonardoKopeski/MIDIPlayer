@@ -1,5 +1,4 @@
-import { NoteOffMidiEvent, NoteOnMidiEvent } from '../core/events/event'
-import { readMidiFile } from '../core/readers/readMidi'
+import { MIDIFile } from '../core/midi'
 import { load } from './loadFile'
 import { log } from './logger'
 import * as Tone from 'tone'
@@ -11,58 +10,39 @@ log('Initializing...')
 
 async function main(){
   // Load file
-  const reader = await load('../../test/test2.mid')
+  const reader = await load('../../test/Determination.mid')
 
   // Read file
-  const { tracks } = readMidiFile(reader)
-
-  const toPlay = []
+  const midi = MIDIFile.read(reader)
 
   // handle tracks
-  for (const track of tracks) {
-    log('Handling track...')
-    let time = 0
-    for (const event of track) {
-      time += event.deltatime
-      if (event instanceof NoteOnMidiEvent) {
-        toPlay.push({
-          mode: 'ON',
-          channel: event.channel,
-          note: event.note,
-          velocity: event.velocity,
-          time
-        })
-      } else if (event instanceof NoteOffMidiEvent) {
-        toPlay.push({
-          mode: 'OFF',
-          channel: event.channel,
-          note: event.note,
-          time
-        })
-      }
-    }
-  }
+  log('Handling track...')
 
-  // Play
-  const now = synth.now()
-  for (const item of toPlay) {
-    const note = item.note.note+item.note.octave
-    if (item.mode === 'ON') {
-      synth.triggerAttack(note, now + (item.time / 1000))
-    } else {
-      synth.triggerRelease(now + (item.time / 1000))
-    }
-    
+  const timeMap = midi.generateTimeMap(1)
+  for (const event of timeMap) {
+    if (event.event == undefined) continue
+    if (event.startTime === event.endTime) continue
+    synth.triggerAttackRelease(
+      event.event.note + event.event.octave,
+      event.endTime - event.startTime,
+      event.startTime
+    )
   }
 }
 
-document.querySelector('button')?.addEventListener('click', async () => {
+document.querySelector('button#play')?.addEventListener('click', async () => {
   await Tone.start()
   log('audio is ready')
+})
+document.querySelector('button#stop')?.addEventListener('click', async () => {
+  synth.releaseAll()
+  synth.disconnect()
+  log('audio is stopping')
 })
 
 main().catch((err)=>{
   log(err)
+  console.error(err) // TEMP
 }).then(() => {
   log('Done!')
 })

@@ -970,14 +970,14 @@ var noteMap = {
 };
 
 // src/core/events/event.ts
-class TrackEvent {
+class MIDITrackEvent {
   deltatime;
   constructor(deltatime) {
     this.deltatime = deltatime;
   }
 }
 
-class MetaEvent extends TrackEvent {
+class MetaEvent extends MIDITrackEvent {
   type;
   data;
   constructor(deltatime, type, data) {
@@ -987,7 +987,7 @@ class MetaEvent extends TrackEvent {
   }
 }
 
-class SysExEvent extends TrackEvent {
+class SysExEvent extends MIDITrackEvent {
   event;
   data;
   constructor(deltatime, event, data) {
@@ -997,7 +997,7 @@ class SysExEvent extends TrackEvent {
   }
 }
 
-class MidiEvent extends TrackEvent {
+class MidiEvent extends MIDITrackEvent {
   channel;
   constructor(deltatime, channel) {
     super(deltatime);
@@ -1092,7 +1092,7 @@ function convertUIntToInt(input) {
   }
 }
 
-// src/core/readMidiHeader.ts
+// src/core/readers/readMidiHeader.ts
 function readMidiHeader(reader) {
   reader.readNextDWord();
   const formatBytes = reader.readNextWord();
@@ -1121,7 +1121,7 @@ function readMidiHeader(reader) {
 var MThd = 1297377380;
 var MTrk = 1297379947;
 
-// src/core/readMidiTag.ts
+// src/core/readers/readMidiTag.ts
 function readMidiTag(reader) {
   const tagBytes = reader.readNextDWord();
   let tag;
@@ -1250,13 +1250,13 @@ var systemEvents = {
 };
 
 // src/core/utils/bases.ts
-function decToHex(number) {
-  return number.toString(16).toUpperCase().split("");
+function decByteToHex(number) {
+  return number.toString(16).toUpperCase().padStart(2, "0").split("");
 }
 
 // src/core/events/readMidiTrackEvent.ts
-function intepretEventCodeByte(byte) {
-  const [highHalfHex, lowHalfHex] = decToHex(byte);
+function intepretEventCode(byte) {
+  const [highHalfHex, lowHalfHex] = decByteToHex(byte);
   const { event, size } = eventFamilies[highHalfHex];
   if (event === "SYSTEM") {
     const { meta, event: event2 } = systemEvents[lowHalfHex];
@@ -1302,41 +1302,56 @@ function createMidiEvent(deltatime, midiEvent, channel, data) {
       return new InvalidMidiEvent(deltatime, channel, data);
   }
 }
-function readMidiTrackEvent(reader) {
+function readMidiTrackEvent(reader, lastEventCode) {
   const deltatime = reader.readNextVarLen();
-  const statusByte = reader.readNextByte();
-  const eventCode = intepretEventCodeByte(statusByte);
-  switch (eventCode.eventType) {
+  let eventCode = reader.readNextByte();
+  if (eventCode <= 127) {
+    eventCode = lastEventCode;
+  }
+  const event = intepretEventCode(eventCode);
+  switch (event.eventType) {
     case "MIDI": {
-      const data = reader.readBytes(eventCode.size);
-      return createMidiEvent(deltatime, eventCode.event, eventCode.channel, data);
+      const data = reader.readBytes(event.size);
+      return {
+        eventCode,
+        event: createMidiEvent(deltatime, event.event, event.channel, data)
+      };
     }
     case "META": {
       const metaType = reader.readNextByte();
       const length = reader.readNextVarLen();
       const data = reader.readBytes(length);
-      return new MetaEvent(deltatime, metaType, data);
+      return {
+        eventCode,
+        event: new MetaEvent(deltatime, metaType, data)
+      };
     }
     case "SYSEX": {
       const length = reader.readNextVarLen();
       const data = reader.readBytes(length);
-      return new SysExEvent(deltatime, eventCode.event, data);
+      return {
+        eventCode,
+        event: new SysExEvent(deltatime, event.event, data)
+      };
     }
   }
 }
 
-// src/core/readMidiTrack.ts
+// src/core/readers/readMidiTrack.ts
 function readMidiTrack(reader) {
   const length = reader.readNextDWord();
   const finalcursor = reader.cursor + length;
   const trackEvents = [];
+  let lastEventCode = -1;
   while (reader.cursor < finalcursor) {
-    trackEvents.push(readMidiTrackEvent(reader));
+    const { event, eventCode } = readMidiTrackEvent(reader, lastEventCode);
+    lastEventCode = eventCode;
+    trackEvents.push(event);
   }
   return trackEvents;
 }
 
-// src/core/readMidi.ts
+// src/core/readers/readMidi.ts
 function readMidiFile(reader) {
   let header = null;
   const tracks = [];
@@ -1361,6 +1376,52 @@ function readMidiFile(reader) {
     header,
     tracks
   };
+}
+
+// src/core/midi.ts
+class MIDIFile {
+  format;
+  trackCount;
+  division;
+  tracks;
+  constructor(format, trackCount, division, tracks) {
+    this.format = format;
+    this.trackCount = trackCount;
+    this.division = division;
+    this.tracks = tracks;
+  }
+  static read(reader) {
+    const readerOutput = readMidiFile(reader);
+    return new MIDIFile(readerOutput.header.format, readerOutput.header.trackCount, readerOutput.header.division, readerOutput.tracks);
+  }
+  generateTimeMap(track) {
+    const out = [];
+    const playingNotes = [];
+    let currentTime = 0;
+    for (const event of this.tracks[track]) {
+      currentTime += Math.round(event.deltatime / this.division / 2);
+      if (event instanceof NoteOnMidiEvent) {
+        playingNotes.push({
+          note: event.note,
+          noteId: event.noteid,
+          channel: event.channel,
+          startTime: currentTime
+        });
+      } else if (event instanceof NoteOffMidiEvent) {
+        const noteIndex = playingNotes.findIndex((note2) => note2.noteId === event.noteid && note2.channel === event.channel);
+        if (noteIndex === -1)
+          continue;
+        const note = playingNotes[noteIndex];
+        playingNotes.splice(noteIndex, 1);
+        out.push({
+          startTime: note.startTime,
+          endTime: currentTime,
+          event: note.note
+        });
+      }
+    }
+    return out;
+  }
 }
 
 // src/utils/filereader.ts
@@ -16441,48 +16502,30 @@ var context2 = getContext();
 var synth = new PolySynth().toDestination();
 log("Initializing...");
 async function main() {
-  const reader = await load("../../test/test2.mid");
-  const { tracks } = readMidiFile(reader);
-  const toPlay = [];
-  for (const track of tracks) {
-    log("Handling track...");
-    let time = 0;
-    for (const event2 of track) {
-      time += event2.deltatime;
-      if (event2 instanceof NoteOnMidiEvent) {
-        toPlay.push({
-          mode: "ON",
-          channel: event2.channel,
-          note: event2.note,
-          velocity: event2.velocity,
-          time
-        });
-      } else if (event2 instanceof NoteOffMidiEvent) {
-        toPlay.push({
-          mode: "OFF",
-          channel: event2.channel,
-          note: event2.note,
-          time
-        });
-      }
-    }
-  }
-  const now = synth.now();
-  for (const item of toPlay) {
-    const note = item.note.note + item.note.octave;
-    if (item.mode === "ON") {
-      synth.triggerAttack(note, now + item.time / 1000);
-    } else {
-      synth.triggerRelease(now + item.time / 1000);
-    }
+  const reader = await load("../../test/Determination.mid");
+  const midi = MIDIFile.read(reader);
+  log("Handling track...");
+  const timeMap = midi.generateTimeMap(1);
+  for (const event2 of timeMap) {
+    if (event2.event == undefined)
+      continue;
+    if (event2.startTime === event2.endTime)
+      continue;
+    synth.triggerAttackRelease(event2.event.note + event2.event.octave, event2.endTime - event2.startTime, event2.startTime);
   }
 }
-document.querySelector("button")?.addEventListener("click", async () => {
+document.querySelector("button#play")?.addEventListener("click", async () => {
   await start();
   log("audio is ready");
 });
+document.querySelector("button#stop")?.addEventListener("click", async () => {
+  synth.releaseAll();
+  synth.disconnect();
+  log("audio is stopping");
+});
 main().catch((err) => {
   log(err);
+  console.error(err);
 }).then(() => {
   log("Done!");
 });

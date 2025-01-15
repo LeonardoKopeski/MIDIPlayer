@@ -41,7 +41,7 @@ export class MIDIFile{
 
     let currentTime = 0
     for (const event of this.tracks[track]) {
-      currentTime += event.deltatime
+      currentTime += Math.round(event.deltatime / this.division / 2)
 
       if (event instanceof NoteOnMidiEvent) {
         playingNotes.push({
@@ -52,7 +52,7 @@ export class MIDIFile{
         })
       } else if (event instanceof NoteOffMidiEvent) {
         const noteIndex = playingNotes.findIndex((note) => note.noteId === event.noteid && note.channel === event.channel)
-        if (noteIndex === -1) throw new Error('Note off event without note on event previously')
+        if (noteIndex === -1) continue
         
         const note = playingNotes[noteIndex]
         playingNotes.splice(noteIndex, 1)
