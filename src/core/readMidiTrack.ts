@@ -8,8 +8,15 @@ export function readMidiTrack(reader: FileReader) {
 
   const trackEvents: TrackEvent[] = []
 
+  let lastEventCode: number = -1
   while (reader.cursor < finalcursor) {
-    trackEvents.push(readMidiTrackEvent(reader))
+    const { event, eventCode } = readMidiTrackEvent(
+      reader,
+      lastEventCode
+    )
+
+    lastEventCode = eventCode
+    trackEvents.push(event)
   }
 
   return trackEvents

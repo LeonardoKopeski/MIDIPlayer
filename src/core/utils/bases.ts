@@ -1,5 +1,5 @@
 import type { Hex } from '../types'
 
-export function decToHex(number: number) {
-  return number.toString(16).toUpperCase().split('') as Hex[]
+export function decByteToHex(number: number) {
+  return number.toString(16).toUpperCase().padStart(2, '0').split('') as Hex[]
 }

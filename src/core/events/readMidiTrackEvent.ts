@@ -1,11 +1,11 @@
 import type { FileReader } from '../../utils/filereader'
 import { eventFamilies, systemEvents } from '../mappings/eventMap'
 import type { MidiEvents } from '../types'
-import { decToHex } from '../utils/bases'
+import { decByteToHex } from '../utils/bases'
 import { ChannelAftertouchMidiEvent, ControlChangeMidiEvent, InvalidMidiEvent, MetaEvent, NoteOffMidiEvent, NoteOnMidiEvent, PitchBendChangeMidiEvent, PolyphonicAftertouchMidiEvent, ProgramChangeMidiEvent, SysExEvent, TrackEvent } from './event'
 
-function intepretEventCodeByte(byte: number) {
-  const [highHalfHex, lowHalfHex] = decToHex(byte)
+function intepretEventCode(byte: number) {
+  const [highHalfHex, lowHalfHex] = decByteToHex(byte)
   const { event, size } = eventFamilies[highHalfHex]
   
   if (event === 'SYSTEM') {
@@ -97,41 +97,57 @@ function createMidiEvent(deltatime: number, midiEvent: MidiEvents, channel: numb
   // }
 }
 
-export function readMidiTrackEvent(reader: FileReader): TrackEvent {
+export function readMidiTrackEvent(reader: FileReader, lastEventCode: number): {
+  eventCode: number,
+  event: TrackEvent
+} {
   const deltatime = reader.readNextVarLen()
-  const statusByte = reader.readNextByte()
+  
+  let eventCode = reader.readNextByte()
+  if (eventCode <= 0x7F) {
+    eventCode = lastEventCode
+  }
 
-  const eventCode = intepretEventCodeByte(statusByte)
+  const event = intepretEventCode(eventCode)
 
-  switch (eventCode.eventType) {
+  switch (event.eventType) {
     case 'MIDI': {
-      const data = reader.readBytes(eventCode.size)
-      return createMidiEvent(
-        deltatime,
-        eventCode.event,
-        eventCode.channel,
-        data
-      )
+      const data = reader.readBytes(event.size)
+      return {
+        eventCode,
+        event: createMidiEvent(
+          deltatime,
+          event.event,
+          event.channel,
+          data
+        )
+      }
     }
     case 'META': {
       const metaType = reader.readNextByte()
       const length = reader.readNextVarLen()
       const data = reader.readBytes(length)
 
-      return new MetaEvent(
-        deltatime,
-        metaType,
-        data
-      )
+      return {
+        eventCode,
+        event: new MetaEvent(
+          deltatime,
+          metaType,
+          data
+        )
+      }
     }
     case 'SYSEX': {
       const length = reader.readNextVarLen()
       const data = reader.readBytes(length)
-      return new SysExEvent(
-        deltatime,
-        eventCode.event,
-        data
-      )
+      return {
+        eventCode,
+        event: new SysExEvent(
+          deltatime,
+          event.event,
+          data
+        )
+      }
     }
   }
 }
